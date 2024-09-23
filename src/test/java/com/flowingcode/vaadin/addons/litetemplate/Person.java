@@ -17,15 +17,28 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons;
+package com.flowingcode.vaadin.addons.litetemplate;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.RouterLayout;
+import com.github.javafaker.Faker;
+import java.io.Serializable;
 
-@SuppressWarnings("serial")
-public class DemoLayout extends Div implements RouterLayout {
+public record Person(
+    String firstName,
+    String lastName,
+    String pictureUrl,
+    String profession,
+    int age
+  ) implements Serializable {
 
-  public DemoLayout() {
-    setSizeFull();
+  private static Faker faker = Faker.instance();
+
+  static Person random() {
+    return new Person(
+        faker.name().firstName(),
+        faker.name().lastName(),
+        "https://i.pravatar.cc/64?" + faker.number().randomNumber(),
+        faker.name().title(),
+        Math.abs(faker.number().numberBetween(-17, 99)));
   }
+
 }

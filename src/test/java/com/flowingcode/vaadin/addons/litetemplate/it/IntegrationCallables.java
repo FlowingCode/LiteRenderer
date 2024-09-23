@@ -17,15 +17,15 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons;
+package com.flowingcode.vaadin.addons.litetemplate.it;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.RouterLayout;
+import com.flowingcode.vaadin.addons.litetemplate.LiteRenderer;
+import com.flowingcode.vaadin.testbench.rpc.RmiCallable;
 
-@SuppressWarnings("serial")
-public class DemoLayout extends Div implements RouterLayout {
+public interface IntegrationCallables extends RmiCallable {
 
-  public DemoLayout() {
-    setSizeFull();
-  }
+  void render(Item item, LiteRenderer<Item> renderer);
+
+  Item getItem();
+
 }

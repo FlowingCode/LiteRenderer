@@ -17,15 +17,15 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons;
+package com.flowingcode.vaadin.addons.litetemplate;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.RouterLayout;
+import java.util.List;
+import java.util.stream.Stream;
 
-@SuppressWarnings("serial")
-public class DemoLayout extends Div implements RouterLayout {
+public class DataService {
 
-  public DemoLayout() {
-    setSizeFull();
+  public static List<Person> getPeople(int n) {
+    return Stream.generate(Person::random).limit(n).toList();
   }
+
 }

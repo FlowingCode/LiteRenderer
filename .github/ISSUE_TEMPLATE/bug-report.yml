@@ -1,5 +1,5 @@
 name: Bug Report
-description: Please report issues related to TEMPLATE_ADDON here.
+description: Please report issues related to LiteRenderer Add-on here.
 body:
   - type: textarea
     id: problem-description
