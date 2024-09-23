@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Template Add-on
+ * Lite Renderer
  * %%
  * Copyright (C) 2024 Flowing Code
  * %%
@@ -17,22 +17,29 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.template;
+package com.flowingcode.vaadin.addons.litetemplate;
 
 import com.flowingcode.vaadin.addons.DemoLayout;
 import com.flowingcode.vaadin.addons.GithubLink;
 import com.flowingcode.vaadin.addons.demo.TabbedDemo;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 
 @SuppressWarnings("serial")
 @ParentLayout(DemoLayout.class)
-@Route("template")
+@Route("lite-renderer")
 @GithubLink("https://github.com/FlowingCode/AddonStarter24")
-public class TemplateDemoView extends TabbedDemo {
+@CssImport("./styles/lite-template-demo-styles.css")
+public class RendererDemoView extends TabbedDemo {
 
-  public TemplateDemoView() {
-    addDemo(TemplateDemo.class);
+  public RendererDemoView() {
+    addDemo(LiteRendererDemo.class);
+    addDemo(FluentMethodsDemo.class);
+    addDemo(LiteComponentDemo.class);
+    addDemo(ListenerArgsDemo.class);
+    addDemo(ButtonClickDemo.class);
+    addDemo(ViritinDemo.class);
     setSizeFull();
   }
 }

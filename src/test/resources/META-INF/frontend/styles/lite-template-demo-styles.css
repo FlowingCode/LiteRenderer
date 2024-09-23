@@ -1,15 +1,15 @@
 /*-
  * #%L
- * Template Add-on
+ * Lite Renderer
  * %%
  * Copyright (C) 2024 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,16 +17,18 @@
  * limitations under the License.
  * #L%
  */
+/*Demo styles*/
+.lite-renderer-demo-template {
+	display: flex;
+}
 
-package com.flowingcode.vaadin.addons.template;
+.lite-renderer-demo-template img {
+	height: var(--lumo-size-m); 
+	margin-right: var(--lumo-space-s);
+	aspect-ratio: 1;
+}
 
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
-import com.vaadin.flow.component.html.Div;
-
-@SuppressWarnings("serial")
-@NpmPackage(value = "@polymer/paper-input", version = "3.2.1")
-@JsModule("@polymer/paper-input/paper-input.js")
-@Tag("paper-input")
-public class TemplateAddon extends Div {}
+.lite-renderer-demo-template div div {
+	font-size: var(--lumo-font-size-s); 
+	color: var(--lumo-secondary-text-color);
+}

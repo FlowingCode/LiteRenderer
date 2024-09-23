@@ -1,15 +1,15 @@
 /*-
  * #%L
- * Template Add-on
+ * Lite Renderer
  * %%
  * Copyright (C) 2024 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,9 +17,12 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.template.test;
+package com.flowingcode.vaadin.addons.litetemplate.test;
 
-import com.flowingcode.vaadin.addons.template.TemplateAddon;
+import com.flowingcode.vaadin.addons.litetemplate.LiteRenderer;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -43,10 +46,14 @@ public class SerializationTest {
 
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
+    var b = new Button("text", ev->{});
+    var tf = new TextField();
+    LiteRenderer<?> renderer = LiteRenderer.of(new HorizontalLayout(b, tf))
+        .withListener(tf, "change", (person, args) -> {}, "event.target.value");
     try {
-      testSerializationOf(new TemplateAddon());
+      testSerializationOf(renderer);
     } catch (Exception e) {
-      Assert.fail("Problem while testing serialization: " + e.getMessage());
+      Assert.fail("Problem while testing serialization: " + e);
     }
   }
 }

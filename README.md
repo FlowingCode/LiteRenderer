@@ -1,24 +1,42 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/template-addon)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/template-addon.svg)](https://vaadin.com/directory/component/template-addon)
-[![Build Status](https://jenkins.flowingcode.com/job/template-addon/badge/icon)](https://jenkins.flowingcode.com/job/template-addon)
-[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/template-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/template-addon)
-[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/template-addon)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/lite-renderer)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/lite-renderer.svg)](https://vaadin.com/directory/component/lite-renderer)
+[![Build Status](https://jenkins.flowingcode.com/job/LiteRenderer-addon/badge/icon)](https://jenkins.flowingcode.com/job/LiteRenderer-addon)
+[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/lite-renderer)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/lite-renderer)
+[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/lite-renderer)
 
-# Template Add-on
+# Lite Renderer Add-on
 
-This is a template project for building new Vaadin 24 add-ons
+**[EXPERIMENTAL]** A `Renderer` for Vaadin Flow that uses a component instance as template, intended for use as an alternative to `LitRenderer`.
+
+```
+grid.addColumn(LiteRenderer.<Person>of(
+    new Button("Update", ev->handleUpdate(LiteRenderer.getItem(ev, Item.class))),
+    new Button("Update", ev->handleRemove(LiteRenderer.getItem(ev, Item.class)));
+```
+
+Instead of:
+
+```
+grid.addColumn(LitRenderer.<Person>of(
+     "<button @click=\"${handleUpdate}\">Update</button>" +
+     "<button @click=\"${handleRemove}\">Remove</button>")
+    .withFunction("handleUpdate", person -> { ... })
+    .withFunction("handleRemove", person -> { ... })        
+)
+```
 
 ## Features
 
-* List the features of your add-on in here
+* Use component instances as template, instead of the HTML approach used by `LitRenderer`.
+* The component is rewritten as a lit template.
 
 ## Online demo
 
-[Online demo here](http://addonsv24.flowingcode.com/template)
+[Online demo here](http://addonsv24.flowingcode.com/lite-renderer)
 
 ## Download release
 
-[Available in Vaadin Directory](https://vaadin.com/directory/component/template-addon)
+[Available in Vaadin Directory](https://vaadin.com/directory/component/lite-renderer)
 
 ### Maven install
 
@@ -27,7 +45,7 @@ Add the following dependencies in your pom.xml file:
 ```xml
 <dependency>
    <groupId>com.flowingcode.vaadin.addons</groupId>
-   <artifactId>template-addon</artifactId>
+   <artifactId>lite-renderer</artifactId>
    <version>X.Y.Z</version>
 </dependency>
 ```
@@ -44,7 +62,7 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-See [here](https://github.com/FlowingCode/TemplateAddon/releases)
+See [here](https://github.com/FlowingCode/LiteRenderer/releases)
 
 ## Issue tracking
 
@@ -69,20 +87,81 @@ Then, follow these steps for creating a contribution:
 
 This add-on is distributed under Apache License 2.0. For license terms, see LICENSE.txt.
 
-TEMPLATE_ADDON is written by Flowing Code S.A.
+Lite Renderer is written by Flowing Code S.A.
 
 # Developer Guide
 
 ## Getting started
 
-Add your code samples in this section
 
-## Special configuration when using Spring
+- Use component instances as template:
+``` 
+    Div template = new Div(
+        new Image("${item.pictureUrl}", "Portrait of ${item.firstName} ${item.lastName}"),
+        new Div("${item.firstName} ${item.lastName}"),
+        new Div("${item.profession}"));
 
-By default, Vaadin Flow only includes ```com/vaadin/flow/component``` to be always scanned for UI components and views. For this reason, the add-on might need to be allowed in order to display correctly. 
+    comboBox.setRenderer(LiteRenderer.<Person>of(template)
+        .withProperty("pictureUrl", Person::pictureUrl)
+        .withProperty("firstName", Person::firstName)
+        .withProperty("lastName", Person::lastName)
+        .withProperty("profession", Person::profession));
+```
 
-To do so, just add ```com.flowingcode``` to the ```vaadin.allowed-packages``` property in ```src/main/resources/application.properties```, like:
+- `withAttribute` and `withListener` are fluent methods that allow setting attributes and listeners:
+```
+    Div div = new Div("${item.firstName} ${item.lastName}");
+    grid.addColumn(LiteRenderer.<Person>of(div)
+        .withProperty("firstName", Person::firstName)
+        .withProperty("lastName", Person::lastName)
+        .withProperty("age", Person::age)
+        .withAttribute(div, "tooltip", "Age: ${item.age}")
+        .withAttribute(div, "style", person-> "color: "+ (person.age()<18?"red":"blue"))
+        .withListener(div, "click", item -> {
+          Notification.show(item.firstName() + " " + item.lastName() + " Clicked!");
+        }
+    ));
+```
+	
+- Wrapping a component with `LiteComponent` allows fluent setters for attributes, properties, and listeners, removing the need for variables.
+```
+    Div div = new Div("${item.firstName} ${item.lastName}");
+    grid.addColumn(LiteRenderer.<Person>of(div)
+        .withProperty("firstName", Person::firstName)
+        .withProperty("lastName", Person::lastName)
+        .withProperty("age", Person::age)
+        .withAttribute(div, "tooltip", "Age: ${item.age}")
+        .withAttribute(div, "style", person-> "color: "+ (person.age()<18?"red":"blue"))
+        .withListener(div, "click", item -> {
+          Notification.show(item.firstName() + " " + item.lastName() + " Clicked!");
+        }
+    ));
+```	
+	
+- Listeners can also receive more data in addition to the item:
+```
+    TextField tf = new TextField();
+    grid.addColumn(LiteRenderer.<Person>of(tf).withListener(tf, "change", (item, args) -> {
+              Notification.show(item.firstName()
+              + " " + item.lastName()
+              + " says: " + args.getString(0));
+    }, "event.target.value"));
+```
 
-```vaadin.allowed-packages = com.vaadin,org.vaadin,dev.hilla,com.flowingcode```
- 
-More information on Spring scanning configuration [here](https://vaadin.com/docs/latest/integrations/spring/configuration/#configure-the-scanning-of-packages).
+- The click event of a template `Button` is called when the button is clicked. Within the event listener, `LiteRenderer.getItem(ev, Person.class)` returns the current item:
+```
+    grid.addColumn(LiteRenderer.<Person>of(new Button("Click", ev->{
+      var item = LiteRenderer.getItem(ev, Person.class);
+      Notification.show(item.firstName() + " " + item.lastName() + " Clicked!");
+    })));
+```
+	
+- [Flow Viritin](https://vaadin.com/directory/component/flow-viritin) components enable more fluent method chaining:
+```
+    grid.addColumn(LiteRenderer.<Person>of(
+            VSpan.of("${item.firstName} ${item.lastName}")
+                 .withStyle("color", "${item.color}"))
+         .withProperty("color", person->person.age()<18?"red":"blue")
+         .withProperty("firstName", Person::firstName)
+         .withProperty("lastName", Person::lastName));
+```
