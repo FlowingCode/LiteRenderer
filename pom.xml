@@ -251,9 +251,9 @@
                     <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
                     <excludes>
                         <exclude>**/main/dev-bundle/**</exclude>
-						<exclude>**/main/bundles/**</exclude>
-						<exclude>**/main/frontend/**</exclude>
-						<exclude>**/main/frontend</exclude>
+                        <exclude>**/main/bundles/**</exclude>
+                        <exclude>**/main/frontend/**</exclude>
+                        <exclude>**/main/frontend</exclude>
                     </excludes>
                 </configuration>
             </plugin>
