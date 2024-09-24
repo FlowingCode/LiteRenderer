@@ -87,7 +87,7 @@ Then, follow these steps for creating a contribution:
 
 This add-on is distributed under Apache License 2.0. For license terms, see LICENSE.txt.
 
-Lite Renderer is written by Flowing Code S.A.
+Lite Renderer Add-On is written by Flowing Code S.A.
 
 # Developer Guide
 
