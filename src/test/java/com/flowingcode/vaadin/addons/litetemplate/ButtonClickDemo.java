@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Lite Renderer
+ * Lite Renderer Add-On
  * %%
  * Copyright (C) 2024 Flowing Code
  * %%
