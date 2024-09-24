@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.flowingcode.vaadin.addons</groupId>
-    <artifactId>lite-renderer</artifactId>
+    <artifactId>lite-renderer-addon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Lite Renderer Add-On</name>
     <description>Lite Template Renderer for Vaadin Flow</description>

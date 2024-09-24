@@ -1,8 +1,8 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/lite-renderer)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/lite-renderer.svg)](https://vaadin.com/directory/component/lite-renderer)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/lite-renderer-addon)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/lite-renderer-addon.svg)](https://vaadin.com/directory/component/lite-renderer-addon)
 [![Build Status](https://jenkins.flowingcode.com/job/LiteRenderer-addon/badge/icon)](https://jenkins.flowingcode.com/job/LiteRenderer-addon)
-[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/lite-renderer)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/lite-renderer)
-[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/lite-renderer)
+[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/lite-renderer-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/lite-renderer-addon)
+[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/lite-renderer-addon)
 
 # Lite Renderer Add-on
 
@@ -45,7 +45,7 @@ Add the following dependencies in your pom.xml file:
 ```xml
 <dependency>
    <groupId>com.flowingcode.vaadin.addons</groupId>
-   <artifactId>lite-renderer</artifactId>
+   <artifactId>lite-renderer-addon</artifactId>
    <version>X.Y.Z</version>
 </dependency>
 ```
