@@ -8,7 +8,7 @@
 
 **[EXPERIMENTAL]** A `Renderer` for Vaadin Flow that uses a component instance as template, intended for use as an alternative to `LitRenderer`.
 
-```
+```java
 grid.addColumn(LiteRenderer.<Person>of(
     new Button("Update", ev->handleUpdate(LiteRenderer.getItem(ev, Item.class))),
     new Button("Update", ev->handleRemove(LiteRenderer.getItem(ev, Item.class)));
@@ -16,7 +16,7 @@ grid.addColumn(LiteRenderer.<Person>of(
 
 Instead of:
 
-```
+```java
 grid.addColumn(LitRenderer.<Person>of(
      "<button @click=\"${handleUpdate}\">Update</button>" +
      "<button @click=\"${handleRemove}\">Remove</button>")
@@ -95,7 +95,7 @@ Lite Renderer Add-On is written by Flowing Code S.A.
 
 
 - Use component instances as template:
-``` 
+```java
     Div template = new Div(
         new Image("${item.pictureUrl}", "Portrait of ${item.firstName} ${item.lastName}"),
         new Div("${item.firstName} ${item.lastName}"),
@@ -109,7 +109,7 @@ Lite Renderer Add-On is written by Flowing Code S.A.
 ```
 
 - `withAttribute` and `withListener` are fluent methods that allow setting attributes and listeners:
-```
+```java
     Div div = new Div("${item.firstName} ${item.lastName}");
     grid.addColumn(LiteRenderer.<Person>of(div)
         .withProperty("firstName", Person::firstName)
@@ -124,7 +124,7 @@ Lite Renderer Add-On is written by Flowing Code S.A.
 ```
 	
 - Wrapping a component with `LiteComponent` allows fluent setters for attributes, properties, and listeners, removing the need for variables.
-```
+```java
     Div div = new Div("${item.firstName} ${item.lastName}");
     grid.addColumn(LiteRenderer.<Person>of(div)
         .withProperty("firstName", Person::firstName)
@@ -139,7 +139,7 @@ Lite Renderer Add-On is written by Flowing Code S.A.
 ```	
 	
 - Listeners can also receive more data in addition to the item:
-```
+```java
     TextField tf = new TextField();
     grid.addColumn(LiteRenderer.<Person>of(tf).withListener(tf, "change", (item, args) -> {
               Notification.show(item.firstName()
@@ -149,7 +149,7 @@ Lite Renderer Add-On is written by Flowing Code S.A.
 ```
 
 - The click event of a template `Button` is called when the button is clicked. Within the event listener, `LiteRenderer.getItem(ev, Person.class)` returns the current item:
-```
+```java
     grid.addColumn(LiteRenderer.<Person>of(new Button("Click", ev->{
       var item = LiteRenderer.getItem(ev, Person.class);
       Notification.show(item.firstName() + " " + item.lastName() + " Clicked!");
@@ -157,7 +157,7 @@ Lite Renderer Add-On is written by Flowing Code S.A.
 ```
 	
 - [Flow Viritin](https://vaadin.com/directory/component/flow-viritin) components enable more fluent method chaining:
-```
+```java
     grid.addColumn(LiteRenderer.<Person>of(
             VSpan.of("${item.firstName} ${item.lastName}")
                  .withStyle("color", "${item.color}"))
