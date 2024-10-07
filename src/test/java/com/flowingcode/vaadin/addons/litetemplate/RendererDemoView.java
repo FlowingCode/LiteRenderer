@@ -29,7 +29,7 @@ import com.vaadin.flow.router.Route;
 @SuppressWarnings("serial")
 @ParentLayout(DemoLayout.class)
 @Route("lite-renderer")
-@GithubLink("https://github.com/FlowingCode/AddonStarter24")
+@GithubLink("https://github.com/FlowingCode/LiteRenderer")
 @CssImport("./styles/lite-template-demo-styles.css")
 public class RendererDemoView extends TabbedDemo {
 
