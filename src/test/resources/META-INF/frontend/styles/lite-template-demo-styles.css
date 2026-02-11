@@ -2,7 +2,7 @@
  * #%L
  * Lite Renderer Add-On
  * %%
- * Copyright (C) 2024 Flowing Code
+ * Copyright (C) 2024 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@
 }
 
 .lite-renderer-demo-template img {
-	height: var(--lumo-size-m); 
-	margin-right: var(--lumo-space-s);
+	height: var(--lumo-size-m, 36px); 
+	margin-right: var(--lumo-space-s, var(--vaadin-padding-s));
 	aspect-ratio: 1;
 }
 
 .lite-renderer-demo-template div div {
-	font-size: var(--lumo-font-size-s); 
-	color: var(--lumo-secondary-text-color);
+	font-size: var(--lumo-font-size-s, var(--aura-font-size-s)); 
+	color: var(--lumo-secondary-text-color, var(--vaadin-text-color-secondary));
 }
