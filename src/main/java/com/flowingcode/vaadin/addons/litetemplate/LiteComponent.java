@@ -2,7 +2,7 @@
  * #%L
  * Lite Renderer Add-On
  * %%
- * Copyright (C) 2024 Flowing Code
+ * Copyright (C) 2024 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
  */
 package com.flowingcode.vaadin.addons.litetemplate;
 
+import com.flowingcode.vaadin.jsonmigration.JsonMigration;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventBus;
 import com.vaadin.flow.dom.Element;
@@ -31,6 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import lombok.NonNull;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * Wrapper around a {@code Component} that provides fluent methods for managing attributes,
@@ -40,6 +42,7 @@ import lombok.NonNull;
  * @author Javier Godoy
  */
 @SuppressWarnings("serial")
+@ExtensionMethod(value = JsonMigration.class, suppressBaseMethods = true)
 public final class LiteComponent<COMPONENT extends Component> extends Component {
 
   // The wrapped component that is being managed.
