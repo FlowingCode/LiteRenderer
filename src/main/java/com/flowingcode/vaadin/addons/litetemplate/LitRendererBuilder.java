@@ -2,7 +2,7 @@
  * #%L
  * Lite Renderer Add-On
  * %%
- * Copyright (C) 2024 Flowing Code
+ * Copyright (C) 2024 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
  */
 package com.flowingcode.vaadin.addons.litetemplate;
 
+import com.flowingcode.vaadin.jsonmigration.JsonMigration;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -26,16 +27,21 @@ import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.function.SerializableBiConsumer;
 import com.vaadin.flow.function.ValueProvider;
+import com.vaadin.flow.server.Version;
 import elemental.json.JsonArray;
 import elemental.json.JsonBoolean;
 import elemental.json.JsonNumber;
 import elemental.json.JsonString;
 import elemental.json.JsonValue;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 
 final class LitRendererBuilder<SOURCE> {
 
@@ -86,11 +92,36 @@ final class LitRendererBuilder<SOURCE> {
 
     String templateExpression = sb.toString() + "\n";
     var renderer = LitRenderer.<SOURCE>of(templateExpression);
-    functions.forEach((n, v) -> renderer.withFunction(n, v));
+    functions.forEach((n, v) -> withFunction(renderer, n, v));
     properties.forEach((n, v) -> renderer.withProperty(n, v));
 
     setTemplateExpression.accept(templateExpression);
     return renderer;
+  }
+
+  @SneakyThrows
+  private LitRenderer<SOURCE> withFunction(LitRenderer<SOURCE> renderer, String name,
+      SerializableBiConsumer<SOURCE, JsonArray> handler) {
+    SerializableBiConsumer<SOURCE, ?> c = handler;
+    if (Version.getMajorVersion() >= 25) {
+      c = (source, array) -> handler.accept(source,
+          (JsonArray) JsonMigration.convertToJsonValue(array));
+    }
+    return (LitRenderer<SOURCE>) LitRenderer_withFunction.invokeExact(renderer, name, c);
+  }
+
+  private static final MethodHandle LitRenderer_withFunction = lookup_withFunction();
+
+  @SneakyThrows
+  private static MethodHandle lookup_withFunction() {
+    MethodHandles.Lookup lookup = MethodHandles.lookup();
+    MethodType methodType = MethodType.methodType(
+        LitRenderer.class,
+        String.class,
+        SerializableBiConsumer.class
+    );
+
+    return lookup.findVirtual(LitRenderer.class, "withFunction", methodType);
   }
 
   private String addFunction(SerializableBiConsumer<SOURCE, JsonArray> handler) {
